@@ -1,0 +1,70 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        mavenCentral()
+
+    }
+    dependencies {
+        classpath "gradle.plugin.org.akhikhl.gretty:gretty:2.0.0"
+    }
+}
+
+plugins {
+    id "org.akhikhl.gretty" version "2.0.0"
+    id 'java'
+    id 'idea'
+    id 'war'
+    id 'groovy'
+}
+
+//war {
+//    baseName = 'account-security-quickstart-spring'
+//    version = '0.0.1-SNAPSHOT'
+//}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+ext['logbackVersion'] = '1.1.11'
+ext['springBootVer'] = '1.5.7.RELEASE'
+
+
+repositories {
+    mavenCentral()
+    maven { url 'http://repo.spring.io/release' }
+}
+
+gretty {
+    servletContainer = 'jetty9'
+    contextPath = ''
+}
+
+configurations {
+    providedRuntime
+}
+
+dependencies {
+    // Groovy
+    compile 'org.codehaus.groovy:groovy-all:2.4.7'
+
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'javax.servlet:jstl:1.2'
+
+    compile('com.authy:authy-java:1.2.0')
+    compile('org.xerial:sqlite-jdbc:3.20.1')
+
+    // Spock
+    testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
+    testRuntime 'cglib:cglib-nodep:3.2.4'
+}
+
+test {
+    reports {
+        junitXml.enabled = false
+        html.enabled = false
+    }
+    testLogging {
+        exceptionFormat = "full"
+    }
+}
