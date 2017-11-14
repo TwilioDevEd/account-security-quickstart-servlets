@@ -19,15 +19,8 @@ plugins {
     id 'groovy'
 }
 
-//war {
-//    baseName = 'account-security-quickstart-spring'
-//    version = '0.0.1-SNAPSHOT'
-//}
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-ext['logbackVersion'] = '1.1.11'
-ext['springBootVer'] = '1.5.7.RELEASE'
 
 
 repositories {
@@ -36,7 +29,7 @@ repositories {
 }
 
 gretty {
-    servletContainer = 'jetty9'
+    servletContainer = 'jetty9.4'
     contextPath = ''
 }
 
@@ -50,6 +43,11 @@ dependencies {
 
     compile 'javax.servlet:javax.servlet-api:3.1.0'
     compile 'javax.servlet:jstl:1.2'
+
+    compile 'ch.qos.logback:logback-access:1.1.11'
+    compile 'ch.qos.logback:logback-classic:1.1.11'
+    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile 'org.slf4j:jcl-over-slf4j:1.7.25'
 
     compile('com.authy:authy-java:1.2.0')
     compile('org.xerial:sqlite-jdbc:3.20.1')
