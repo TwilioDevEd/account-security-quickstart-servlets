@@ -3,6 +3,7 @@ package com.twilio.accountsecurity.servlets
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.twilio.accountsecurity.exceptions.UserExistsException
 import com.twilio.accountsecurity.services.RegisterService
+import com.twilio.accountsecurity.servlets.requests.RequestParser
 import com.twilio.accountsecurity.servlets.requests.UserRegisterRequest
 import spock.lang.Specification
 import spock.lang.Subject
@@ -18,7 +19,8 @@ class RegisterServletSpec extends Specification {
     PrintWriter responseWritter = Mock()
     SessionManager sessionManager = Mock()
 
-    @Subject def registerServlet = new RegisterServlet(registerService, new ObjectMapper(), sessionManager)
+    @Subject def registerServlet = new RegisterServlet(registerService,
+            sessionManager, new RequestParser())
 
     def jsonRequest = '{' +
             '"username": "name",' +
