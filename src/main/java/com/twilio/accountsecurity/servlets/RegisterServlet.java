@@ -46,5 +46,4 @@ public class RegisterServlet extends BaseServlet {
             respondWith(response, 500, e.getMessage());
         }
     }
-
 }

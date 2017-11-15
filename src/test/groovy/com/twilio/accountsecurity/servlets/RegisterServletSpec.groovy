@@ -36,7 +36,7 @@ class RegisterServletSpec extends Specification {
 
     }
 
-    def "register - returns 200"() {
+    def "doPost - returns 200"() {
         when:
         registerServlet.doPost(request, response)
 
@@ -47,7 +47,7 @@ class RegisterServletSpec extends Specification {
         1 * sessionManager.logIn(request, username)
     }
 
-    def "register - returns 412"() {
+    def "doPost - returns 412"() {
         when:
         registerServlet.doPost(request, response)
 

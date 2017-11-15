@@ -20,6 +20,14 @@ public class SessionManager {
         session.setMaxInactiveInterval(MAX_INACTIVE_INTERVAL);
     }
 
-    
+    public Optional<String> getLoggedUsername(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            return Optional.of((String) session.getAttribute(USERNAME));
+        }
+
+        return Optional.empty();
+    }
+
 }
 
