@@ -1,6 +1,5 @@
 package com.twilio.accountsecurity.servlets
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.twilio.accountsecurity.exceptions.UserExistsException
 import com.twilio.accountsecurity.services.RegisterService
 import com.twilio.accountsecurity.servlets.requests.RequestParser
