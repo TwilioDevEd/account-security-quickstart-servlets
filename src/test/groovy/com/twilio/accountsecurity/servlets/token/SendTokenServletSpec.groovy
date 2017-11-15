@@ -8,6 +8,7 @@ import spock.lang.Subject
 
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import javax.servlet.http.HttpSession
 
 class SendTokenServletSpec extends Specification {
 
@@ -16,6 +17,7 @@ class SendTokenServletSpec extends Specification {
 
     HttpServletRequest request = Mock()
     HttpServletResponse response = Mock()
+    HttpSession session = Mock()
     PrintWriter responseWritter = Mock()
 
     @Subject def subject = new SendTokenServlet(tokenService, sessionManager)
@@ -63,6 +65,19 @@ class SendTokenServletSpec extends Specification {
         1 * request.getServletPath() >> '/api/token/voice'
         1 * sessionManager.getLoggedUsername(request) >> Optional.of('username')
         1 * tokenService.sendVoiceToken('username')
+        1 * response.setStatus(200)
+    }
+
+    def "doPost - onetouch - return 200"() {
+        when:
+        subject.doPost(request, response)
+
+        then:
+        1 * request.getSession() >> session
+        1 * session.setAttribute('onetouchUUID', 'uuid')
+        1 * request.getServletPath() >> '/api/token/onetouch'
+        1 * sessionManager.getLoggedUsername(request) >> Optional.of('username')
+        1 * tokenService.sendOneTouchToken('username') >> 'uuid'
         1 * response.setStatus(200)
     }
 }

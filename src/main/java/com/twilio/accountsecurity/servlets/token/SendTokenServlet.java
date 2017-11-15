@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet(urlPatterns = {"/api/token/sms", "/api/token/voice"})
+@WebServlet(urlPatterns = {"/api/token/sms", "/api/token/voice", "/api/token/onetouch"})
 public class SendTokenServlet extends BaseServlet {
 
     private TokenService tokenService;
@@ -33,25 +33,29 @@ public class SendTokenServlet extends BaseServlet {
         if(loggedUsernameOptional.isPresent()) {
             String loggedUsername = loggedUsernameOptional.get();
             try {
-                String via = request.getServletPath().replace("/api/token/", "");
-                switch (via) {
-                    case "sms":
-                        tokenService.sendSmsToken(loggedUsername);
-                        respondWith(response, 200);
-                        break;
-                    case "voice":
-                        tokenService.sendVoiceToken(loggedUsername);
-                        respondWith(response, 200);
-                        break;
-                    default:
-                        respondWith(response, 404);
-                        break;
-                }
+                sendToken(request, loggedUsername);
+                respondWith(response, 200);
             } catch(TokenVerificationException e) {
                 respondWith(response, 500, e.getMessage());
             }
         } else {
             respondWith(response, 500, "You are not logged in");
+        }
+    }
+
+    private void sendToken(HttpServletRequest request, String loggedUsername) {
+        String via = request.getServletPath().replace("/api/token/", "");
+        switch (via) {
+            case "sms":
+                tokenService.sendSmsToken(loggedUsername);
+                break;
+            case "voice":
+                tokenService.sendVoiceToken(loggedUsername);
+                break;
+            case "onetouch":
+                String uuid = tokenService.sendOneTouchToken(loggedUsername);
+                request.getSession().setAttribute("onetouchUUID", uuid);
+                break;
         }
     }
 }
