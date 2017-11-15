@@ -44,13 +44,22 @@ dependencies {
     compile 'javax.servlet:javax.servlet-api:3.1.0'
     compile 'javax.servlet:jstl:1.2'
 
+    // Logging
     compile 'ch.qos.logback:logback-access:1.1.11'
     compile 'ch.qos.logback:logback-classic:1.1.11'
     compile 'org.slf4j:slf4j-api:1.7.25'
     compile 'org.slf4j:jcl-over-slf4j:1.7.25'
 
-    compile('com.authy:authy-java:1.2.0')
+    // Persistence
+    compile('org.eclipse.persistence:eclipselink:2.7.0') {
+        exclude group: 'org.eclipse.persistence', module: 'javax.persistence'
+    }
+    compile 'org.eclipse.persistence:javax.persistence:2.1.1'
     compile('org.xerial:sqlite-jdbc:3.20.1')
+
+    compile 'com.fasterxml.jackson.core:jackson-core:2.9.0'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.0'
+    compile('com.authy:authy-java:1.2.0')
 
     // Spock
     testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
