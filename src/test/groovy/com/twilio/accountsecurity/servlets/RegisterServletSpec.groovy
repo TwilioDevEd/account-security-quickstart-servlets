@@ -9,7 +9,6 @@ import spock.lang.Subject
 
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import java.nio.charset.StandardCharsets
 
 class RegisterServletSpec extends Specification {
 
@@ -17,8 +16,9 @@ class RegisterServletSpec extends Specification {
     HttpServletRequest request = Mock()
     HttpServletResponse response = Mock()
     PrintWriter responseWritter = Mock()
+    SessionManager sessionManager = Mock()
 
-    @Subject def registerServlet = new RegisterServlet(registerService, new ObjectMapper())
+    @Subject def registerServlet = new RegisterServlet(registerService, new ObjectMapper(), sessionManager)
 
     def jsonRequest = '{' +
             '"username": "name",' +
@@ -27,7 +27,8 @@ class RegisterServletSpec extends Specification {
             '"countryCode": "1",' +
             '"phoneNumber": "123"' +
             '}'
-    def registerRequest = new UserRegisterRequest("name", "email", "pass", "1", "123")
+    def username = "name"
+    def registerRequest = new UserRegisterRequest(username, "email", "pass", "1", "123")
 
     def setup() {
 
@@ -41,6 +42,7 @@ class RegisterServletSpec extends Specification {
         1 * request.getReader() >> new BufferedReader(new StringReader(jsonRequest))
         1 * registerService.register(registerRequest)
         1 * response.setStatus(200)
+        1 * sessionManager.logIn(request, username)
     }
 
     def "register - returns 412"() {
@@ -53,5 +55,6 @@ class RegisterServletSpec extends Specification {
         1 * response.setStatus(412)
         1 * response.getWriter() >> responseWritter
         1 * responseWritter.print("User already exists")
+        0 * sessionManager.logIn(request, username)
     }
 }

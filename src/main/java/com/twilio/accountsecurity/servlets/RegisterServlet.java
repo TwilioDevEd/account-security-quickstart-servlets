@@ -2,6 +2,7 @@ package com.twilio.accountsecurity.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twilio.accountsecurity.exceptions.UserExistsException;
+import com.twilio.accountsecurity.exceptions.UserRegistrationException;
 import com.twilio.accountsecurity.services.RegisterService;
 import com.twilio.accountsecurity.servlets.requests.UserRegisterRequest;
 
@@ -18,15 +19,18 @@ public class RegisterServlet extends HttpServlet {
 
     private RegisterService registerService;
     private ObjectMapper objectMapper;
+    private SessionManager sessionManager;
 
-    public RegisterServlet(RegisterService registerService, ObjectMapper objectMapper) {
+    public RegisterServlet(RegisterService registerService, ObjectMapper objectMapper, SessionManager sessionManager) {
         this.registerService = registerService;
         this.objectMapper = objectMapper;
+        this.sessionManager = sessionManager;
     }
 
     public RegisterServlet() {
         this.registerService = new RegisterService();
         this.objectMapper = new ObjectMapper();
+        this.sessionManager = new SessionManager();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -34,9 +38,12 @@ public class RegisterServlet extends HttpServlet {
             UserRegisterRequest registerRequest = parseRequestBody(request,
                     UserRegisterRequest.class);
             registerService.register(registerRequest);
+            sessionManager.logIn(request, registerRequest.getUsername());
             respondWith(response, 200);
         } catch (UserExistsException e) {
             respondWith(response, 412, "User already exists");
+        } catch (UserRegistrationException e) {
+            respondWith(response, 500, e.getMessage());
         }
     }
 
