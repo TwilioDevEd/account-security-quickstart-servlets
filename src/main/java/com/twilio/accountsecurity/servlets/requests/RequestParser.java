@@ -1,6 +1,7 @@
 package com.twilio.accountsecurity.servlets.requests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.twilio.accountsecurity.exceptions.ParseRequestException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
@@ -14,9 +15,12 @@ public class RequestParser {
         this.objectMapper = new ObjectMapper();
     }
 
-    public <T> T parse(HttpServletRequest request, Class<T> klass)
-            throws IOException {
-        BufferedReader reader = request.getReader();
-        return objectMapper.readValue(reader, klass);
+    public <T> T parse(HttpServletRequest request, Class<T> klass) {
+        try {
+            BufferedReader reader = request.getReader();
+            return objectMapper.readValue(reader, klass);
+        } catch (IOException e) {
+            throw new ParseRequestException(e.getMessage());
+        }
     }
 }

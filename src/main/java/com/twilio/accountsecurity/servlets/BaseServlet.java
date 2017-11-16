@@ -14,9 +14,11 @@ public abstract class BaseServlet extends HttpServlet {
     protected void respondWith(HttpServletResponse response, int statusCode, String body)
             throws IOException {
         PrintWriter writer = response.getWriter();
-        writer.print(body);
-        writer.flush();
-        respondWith(response, statusCode);
+        if(body != null) {
+            writer.print(body);
+            writer.flush();
+            respondWith(response, statusCode);
+        }
     }
 
 }

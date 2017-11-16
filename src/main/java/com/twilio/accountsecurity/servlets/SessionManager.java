@@ -1,6 +1,10 @@
 package com.twilio.accountsecurity.servlets;
 
 import com.twilio.accountsecurity.exceptions.AuthenticationException;
+import com.twilio.accountsecurity.models.UserModel;
+import com.twilio.accountsecurity.repository.UserRepository;
+import com.twilio.accountsecurity.services.PasswordEncoder;
+import com.twilio.accountsecurity.servlets.requests.LoginRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,7 +18,29 @@ public class SessionManager {
 
     private static final int MAX_INACTIVE_INTERVAL = 30 * 60;
 
-    public void logInFirstStep(HttpServletRequest request, String username) {
+    private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
+
+    public SessionManager(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public SessionManager() {
+        this.userRepository = new UserRepository();
+        this.passwordEncoder = new PasswordEncoder();
+    }
+
+    public void logInFirstStep(HttpServletRequest request, String username, String password) {
+        UserModel user = userRepository.findByUsername(username);
+        if(user == null) {
+            throw new AuthenticationException("User not found");
+        }
+        String candidateHashedPassword = passwordEncoder.encode(password,
+                user.getSalt().getBytes());
+        if(!candidateHashedPassword.equals(user.getPassword())) {
+            throw new AuthenticationException("Invalid password");
+        }
         HttpSession session = request.getSession();
         session.setAttribute(AUTHENTICATED_DB, true);
         session.removeAttribute(AUTHENTICATED_AUTHY);
@@ -38,5 +64,7 @@ public class SessionManager {
         }
         session.setAttribute(AUTHENTICATED_AUTHY, true);
     }
+
+   
 }
 

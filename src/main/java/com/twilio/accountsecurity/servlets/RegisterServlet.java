@@ -37,7 +37,8 @@ public class RegisterServlet extends BaseServlet {
             UserRegisterRequest registerRequest = requestParser.parse(request,
                     UserRegisterRequest.class);
             registerService.register(registerRequest);
-            sessionManager.logInFirstStep(request, registerRequest.getUsername());
+            sessionManager.logInFirstStep(request, registerRequest.getUsername(),
+                    registerRequest.getPassword());
             respondWith(response, 200);
         } catch (UserExistsException e) {
             respondWith(response, 412, "User already exists");
