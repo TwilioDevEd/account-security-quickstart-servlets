@@ -1,7 +1,6 @@
 package com.twilio.accountsecurity.servlets
 
 import com.twilio.accountsecurity.exceptions.AuthenticationException
-import com.twilio.accountsecurity.services.TokenService
 import com.twilio.accountsecurity.servlets.requests.LoginRequest
 import com.twilio.accountsecurity.servlets.requests.RequestParser
 import spock.lang.Specification
@@ -9,16 +8,13 @@ import spock.lang.Subject
 
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import javax.servlet.http.HttpSession
 
 class LoginServletSpec extends Specification {
 
-    TokenService tokenService = Mock()
     SessionManager sessionManager = Mock()
 
     HttpServletRequest request = Mock()
     HttpServletResponse response = Mock()
-    HttpSession session = Mock()
     PrintWriter responseWritter = Mock()
 
     @Subject def subject = new LoginServlet(sessionManager, new RequestParser())
@@ -26,7 +22,6 @@ class LoginServletSpec extends Specification {
     def password = 'password'
     def username = 'username'
     def requestJson = '{"username": "' + username + '", "password":"' + password + '"}'
-    def requestObject = new LoginRequest(username, password)
 
     def "doPost - login successfully"() {
         when:

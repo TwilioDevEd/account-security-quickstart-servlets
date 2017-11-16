@@ -65,6 +65,13 @@ public class SessionManager {
         session.setAttribute(AUTHENTICATED_AUTHY, true);
     }
 
-   
+    public void logOut(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+    }
+
+
 }
 
