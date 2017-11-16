@@ -15,7 +15,7 @@ public class UserModel {
     private String email;
     private Integer authyId;
     private String password;
-    private String salt;
+    private byte[] salt;
     private UserRoles role;
     private String countryCode;
     private String phoneNumber;
@@ -166,11 +166,11 @@ public class UserModel {
                 '}';
     }
 
-    public String getSalt() {
+    public byte[] getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt) {
+    public void setSalt(byte[] salt) {
         this.salt = salt;
     }
 }

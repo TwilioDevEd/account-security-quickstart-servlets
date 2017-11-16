@@ -12,7 +12,7 @@ import com.twilio.accountsecurity.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.twilio.accountsecurity.services.Settings.authyId;
+import static com.twilio.accountsecurity.config.Settings.authyId;
 
 public class TokenService {
 

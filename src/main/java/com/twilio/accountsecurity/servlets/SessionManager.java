@@ -36,8 +36,7 @@ public class SessionManager {
         if(user == null) {
             throw new AuthenticationException("User not found");
         }
-        String candidateHashedPassword = passwordEncoder.encode(password,
-                user.getSalt().getBytes());
+        String candidateHashedPassword = passwordEncoder.encode(password, user.getSalt());
         if(!candidateHashedPassword.equals(user.getPassword())) {
             throw new AuthenticationException("Invalid password");
         }
@@ -72,6 +71,24 @@ public class SessionManager {
         }
     }
 
+    public boolean isAuthenticatedFirstStep(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            Object authenticated = session.getAttribute(AUTHENTICATED_DB);
+            return authenticated != null && (boolean) authenticated;
+        }
 
+        return false;
+    }
+
+    public boolean isAuthenticatedSecondStep(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            Object authenticatedAuthy = session.getAttribute(AUTHENTICATED_AUTHY);
+            return authenticatedAuthy != null && (boolean) authenticatedAuthy;
+        }
+
+        return false;
+    }
 }
 

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet(urlPatterns = {"/api/token/onetouchstatus"})
+@WebServlet(urlPatterns = {"/api/token/verify"})
 public class VerifyTokenServlet extends BaseServlet {
 
     private TokenService tokenService;
