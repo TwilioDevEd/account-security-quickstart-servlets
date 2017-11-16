@@ -43,6 +43,7 @@ public class VerifyTokenServlet extends BaseServlet {
             String loggedUsername = loggedUsernameOptional.get();
             try {
                 tokenService.verify(loggedUsername, verifyTokenRequest.getToken());
+                sessionManager.logInSecondStep(request);
                 respondWith(response, 200);
             } catch (TokenVerificationException e) {
                 respondWith(response, 400, e.getMessage());

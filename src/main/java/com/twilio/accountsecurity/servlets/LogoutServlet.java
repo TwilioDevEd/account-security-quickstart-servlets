@@ -18,7 +18,7 @@ public class LogoutServlet extends BaseServlet {
         this.sessionManager = new SessionManager();
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         sessionManager.logOut(request);
         response.sendRedirect(request.getContextPath() + "/index.html");
