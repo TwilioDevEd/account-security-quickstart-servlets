@@ -1,6 +1,5 @@
 package com.twilio.accountsecurity.servlets;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twilio.accountsecurity.exceptions.UserExistsException;
 import com.twilio.accountsecurity.exceptions.UserRegistrationException;
 import com.twilio.accountsecurity.services.RegisterService;
@@ -38,7 +37,7 @@ public class RegisterServlet extends BaseServlet {
             UserRegisterRequest registerRequest = requestParser.parse(request,
                     UserRegisterRequest.class);
             registerService.register(registerRequest);
-            sessionManager.logIn(request, registerRequest.getUsername());
+            sessionManager.logInFirstStep(request, registerRequest.getUsername());
             respondWith(response, 200);
         } catch (UserExistsException e) {
             respondWith(response, 412, "User already exists");

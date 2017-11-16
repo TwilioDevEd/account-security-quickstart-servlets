@@ -1,5 +1,7 @@
 package com.twilio.accountsecurity.servlets;
 
+import com.twilio.accountsecurity.exceptions.AuthenticationException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
@@ -12,7 +14,7 @@ public class SessionManager {
 
     private static final int MAX_INACTIVE_INTERVAL = 30 * 60;
 
-    public void logIn(HttpServletRequest request, String username) {
+    public void logInFirstStep(HttpServletRequest request, String username) {
         HttpSession session = request.getSession();
         session.setAttribute(AUTHENTICATED_DB, true);
         session.removeAttribute(AUTHENTICATED_AUTHY);
@@ -29,5 +31,12 @@ public class SessionManager {
         return Optional.empty();
     }
 
+    public void logInSecondStep(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if(!(boolean)session.getAttribute(AUTHENTICATED_DB)) {
+            throw new AuthenticationException("User did not login");
+        }
+        session.setAttribute(AUTHENTICATED_AUTHY, true);
+    }
 }
 

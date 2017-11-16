@@ -43,7 +43,7 @@ class RegisterServletSpec extends Specification {
         1 * request.getReader() >> new BufferedReader(new StringReader(jsonRequest))
         1 * registerService.register(registerRequest)
         1 * response.setStatus(200)
-        1 * sessionManager.logIn(request, username)
+        1 * sessionManager.logInFirstStep(request, username)
     }
 
     def "doPost - returns 412"() {
@@ -56,6 +56,6 @@ class RegisterServletSpec extends Specification {
         1 * response.setStatus(412)
         1 * response.getWriter() >> responseWritter
         1 * responseWritter.print("User already exists")
-        0 * sessionManager.logIn(request, username)
+        0 * sessionManager.logInFirstStep(request, username)
     }
 }
