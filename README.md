@@ -4,7 +4,7 @@
 
 # Twilio Account Security Quickstart - Two-Factor Authentication and Phone Verification
 
-A simple Java, Spring and AngularJS implementation of a website that uses Twilio Account Security services to protect all assets within a folder. Additionally, it shows a Phone Verification implementation.
+A simple Java, Servlets and AngularJS implementation of a website that uses Twilio Account Security services to protect all assets within a folder. Additionally, it shows a Phone Verification implementation.
 
 It uses four channels for delivery, SMS, Voice, Soft Tokens, and Push Notifications. You should have the [Authy App](https://authy.com/download/) installed to try Soft Token and Push Notification support.
 
