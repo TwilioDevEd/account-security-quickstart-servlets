@@ -30,11 +30,11 @@ class OneTouchStatusServletTest extends Specification {
         then:
         1 * request.getSession() >> session
         1 * session.getAttribute("onetouchUUID") >> "uuid"
-        1 * tokenService.retrieveOneTouchStatus("uuid") >> true
+        1 * tokenService.retrieveOneTouchStatus("uuid") >> "approved"
         1 * sessionManager.logInSecondStep(request)
         1 * response.setStatus(200)
         1 * response.getWriter() >> responseWritter
-        1 * responseWritter.print('true')
+        1 * responseWritter.print('{"approvalRequestStatus":"approved"}')
     }
 
     def "doPost - returns 500 for TokenVerificationException"() {
@@ -57,7 +57,7 @@ class OneTouchStatusServletTest extends Specification {
         then:
         1 * request.getSession() >> session
         1 * session.getAttribute("onetouchUUID") >> "uuid"
-        1 * tokenService.retrieveOneTouchStatus("uuid") >> true
+        1 * tokenService.retrieveOneTouchStatus("uuid") >> "approved"
         1 * sessionManager.logInSecondStep(request) >> {throw new AuthenticationException("message")}
         1 * response.setStatus(401)
         1 * response.getWriter() >> responseWritter

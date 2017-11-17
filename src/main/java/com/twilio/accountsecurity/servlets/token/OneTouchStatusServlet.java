@@ -5,6 +5,7 @@ import com.twilio.accountsecurity.exceptions.TokenVerificationException;
 import com.twilio.accountsecurity.services.TokenService;
 import com.twilio.accountsecurity.servlets.BaseServlet;
 import com.twilio.accountsecurity.servlets.SessionManager;
+import com.twilio.accountsecurity.servlets.responses.OneTouchStatusResponse;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,11 +32,11 @@ public class OneTouchStatusServlet extends BaseServlet {
             throws IOException {
         String onetouchUUID = (String) request.getSession().getAttribute("onetouchUUID");
         try {
-            boolean status = tokenService.retrieveOneTouchStatus(onetouchUUID);
-            if (status) {
+            String status = tokenService.retrieveOneTouchStatus(onetouchUUID);
+            if (status.equals("approved")) {
                 sessionManager.logInSecondStep(request);
             }
-            respondWith(response, 200, String.valueOf(status));
+            respondWith(response, 200, new OneTouchStatusResponse(status));
         } catch (TokenVerificationException  e) {
             respondWith(response, 500, e.getMessage());
         } catch (AuthenticationException e) {

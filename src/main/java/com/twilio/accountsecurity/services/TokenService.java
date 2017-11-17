@@ -86,18 +86,17 @@ public class TokenService {
         }
     }
 
-    public boolean retrieveOneTouchStatus(String uuid) {
+    public String retrieveOneTouchStatus(String uuid) {
         try {
             return authyClient
                     .getOneTouch()
                     .getApprovalRequestStatus(uuid)
                     .getApprovalRequest()
-                    .getStatus()
-                    .equals("approved");
+                    .getStatus();
         } catch (OneTouchException e) {
             logAndThrow(e.getMessage());
+            return "";
         }
-        return false;
     }
 
     private void logAndThrow(String message) {

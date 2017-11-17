@@ -29,7 +29,8 @@ class RegisterServletSpec extends Specification {
             '"phoneNumber": "123"' +
             '}'
     def username = "name"
-    def registerRequest = new UserRegisterRequest(username, "email", "pass", "1", "123")
+    def password = "pass"
+    def registerRequest = new UserRegisterRequest(username, "email", password, "1", "123")
 
     def setup() {
 
@@ -43,7 +44,7 @@ class RegisterServletSpec extends Specification {
         1 * request.getReader() >> new BufferedReader(new StringReader(jsonRequest))
         1 * registerService.register(registerRequest)
         1 * response.setStatus(200)
-        1 * sessionManager.logInFirstStep(request, username)
+        1 * sessionManager.logInFirstStep(request, username, password)
     }
 
     def "doPost - returns 412"() {
