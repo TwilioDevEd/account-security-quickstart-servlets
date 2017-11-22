@@ -172,7 +172,7 @@ app.controller('PhoneVerificationController', function ($scope, $http, $window, 
      * Verify phone token
      */
     $scope.verifyToken = function () {
-        $http.post('/api/phone-verification/verify', $scope.setup)
+        $http.post('/api/phone-verification/check', $scope.setup)
             .success(function (data, status, headers, config) {
                 console.log("Phone Verification Success success: ", data);
                 $window.location.href = $window.location.origin + "/verified/index.html";
