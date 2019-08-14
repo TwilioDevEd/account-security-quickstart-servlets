@@ -51,7 +51,7 @@ dependencies {
     compile 'org.slf4j:jcl-over-slf4j:1.7.25'
 
     // Persistence
-    compile('org.eclipse.persistence:eclipselink:2.7.0') {
+    compile('org.eclipse.persistence:eclipselink:2.7.4') {
         exclude group: 'org.eclipse.persistence', module: 'javax.persistence'
     }
     compile 'org.eclipse.persistence:javax.persistence:2.1.1'
