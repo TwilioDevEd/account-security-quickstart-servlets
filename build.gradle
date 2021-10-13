@@ -54,7 +54,7 @@ dependencies {
     compile('org.eclipse.persistence:eclipselink:2.7.0') {
         exclude group: 'org.eclipse.persistence', module: 'javax.persistence'
     }
-    compile 'org.eclipse.persistence:javax.persistence:2.1.1'
+    compile 'org.eclipse.persistence:javax.persistence:2.2.1'
     compile('org.xerial:sqlite-jdbc:3.20.1')
 
     compile 'com.fasterxml.jackson.core:jackson-core:2.9.0'
