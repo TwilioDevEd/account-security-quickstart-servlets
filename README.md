@@ -20,13 +20,13 @@ It uses four channels for delivery, SMS, Voice, Soft Tokens, and Push Authentica
 
 ### Setup
 - Clone this repo
-- Run `gradle build`
+- Run `./gradlew build`
 - Register for a [Twilio Account](https://www.twilio.com/).
-- Setup an Authy app via the [Twilio Console](https://twilio.com/console).
+- Set up an Authy app via the [Twilio Console](https://twilio.com/console).
 - Grab an Application API key from the Dashboard and paste it in `.env.example`
 - Save the `.env.example` file as `.env`
 - Load the configuration with `source .env`
-- Run `gradle appRun` from the cloned repo to run the app
+- Run `./gradlew appRun` from the cloned repo to run the app
 
 ### License
 - MIT
