@@ -50,6 +50,9 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.25'
     compile 'org.slf4j:jcl-over-slf4j:1.7.25'
 
+    // DotEnv
+    compile 'io.github.cdimascio:dotenv-java:2.2.0'
+
     // Persistence
     compile('org.eclipse.persistence:eclipselink:2.7.0') {
         exclude group: 'org.eclipse.persistence', module: 'javax.persistence'
