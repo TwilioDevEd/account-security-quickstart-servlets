@@ -54,7 +54,7 @@ dependencies {
     compile 'io.github.cdimascio:dotenv-java:2.2.0'
 
     // Persistence
-    compile('org.eclipse.persistence:eclipselink:2.7.0') {
+    compile('org.eclipse.persistence:eclipselink:3.0.3') {
         exclude group: 'org.eclipse.persistence', module: 'javax.persistence'
     }
     compile 'org.eclipse.persistence:javax.persistence:2.1.1'
