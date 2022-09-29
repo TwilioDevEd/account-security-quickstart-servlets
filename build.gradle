@@ -65,7 +65,7 @@ dependencies {
     compile('com.authy:authy-java:1.2.0')
 
     // Spock
-    testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
+    testCompile 'org.spockframework:spock-core:2.3-groovy-4.0'
     testRuntime 'cglib:cglib-nodep:3.2.4'
     testCompile 'org.objenesis:objenesis:1.2'
 }
