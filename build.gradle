@@ -39,7 +39,7 @@ configurations {
 
 dependencies {
     // Groovy
-    compile 'org.codehaus.groovy:groovy-all:2.4.7'
+    compile 'org.codehaus.groovy:groovy-all:3.0.17'
 
     compile 'javax.servlet:javax.servlet-api:3.1.0'
     compile 'javax.servlet:jstl:1.2'
